@@ -1,0 +1,44 @@
+<o-form-layout-manager attr="CategoryAttribute" mode="tab" title="CATEGORYATTRIBUTE">
+    <div fxFill fxLayout="column" fxLayoutAlign="start">
+        <o-table 
+            attr="CategoryAttributeTable" 
+            service="CategoryAttribute" 
+            entity="CategoryAttribute" 
+            title="CATEGORYATTRIBUTE"
+            keys="id"
+            columns="attribute_name;category_id;value;id" 
+            header-actions="R;D"
+            visible-columns="attribute_name;category_id;value;id"  
+            sort-columns="attribute_name" 
+            query-rows="20" 
+            quick-filter="yes"
+            row-height="medium" 
+            select-all-checkbox="true" 
+            pageable="yes"  
+            auto-adjust="true" 
+            virtual-scroll="yes" 
+            edition-mode="dblclick"
+            horizontal-scroll="yes"
+            show-title="yes"
+            export-button="yes">
+            
+            <o-table-column #attribute_name attr="attribute_name" title=" attribute_name*" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column attr="category_id" title="category_id">
+    <o-table-cell-renderer-service attr="category_id" 
+        service="DeviceCategory" entity="DeviceCategoryType" columns="id;name"
+        parent-keys="id:category_id"
+        value-column="name" keys="category_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+            
+            <o-table-column #value attr="value" title="value" editable="no" required="yes" content-align="left"></o-table-column>
+            
+            <o-table-column #id attr="id" title="id" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+            
+            <o-table-context-menu></o-table-context-menu>
+            <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+        </o-table>
+    </div>
+</o-form-layout-manager>

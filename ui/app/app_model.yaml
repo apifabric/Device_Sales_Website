@@ -1,0 +1,514 @@
+about:
+  date: October 12, 2024 14:38:59
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Accessory:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: TEXT
+    - name: price
+      required: true
+      template: real
+      type: FLOAT
+    - name: stock_quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents accessories for devices, such as cables and additional
+      storage.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents accessories for devices, such as cables and additional storage.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Accessory
+  CategoryAttribute:
+    columns:
+    - label: ' attribute_name*'
+      name: attribute_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: category_id
+      template: integer
+      type: INTEGER
+    - name: value
+      required: true
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents attributes specific to each device category.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: attribute_name
+    home_template: home_template.html
+    info_list: Represents attributes specific to each device category.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: DeviceCategory
+    type: CategoryAttribute
+  Customer:
+    columns:
+    - label: ' first_name*'
+      name: first_name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: last_name
+      required: true
+      template: text
+      type: VARCHAR
+    - name: email
+      required: true
+      template: text
+      type: VARCHAR
+    - name: phone_number
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents customers who purchase products and accessories.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: first_name
+    home_template: home_template.html
+    info_list: Represents customers who purchase products and accessories.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - customer_id
+      name: OrderList
+      resource: Order
+    - direction: tomany
+      fks:
+      - customer_id
+      name: ReviewList
+      resource: Review
+    type: Customer
+  DeviceCategory:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: TEXT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents categories of devices like NAS, DAS, etc.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents categories of devices like NAS, DAS, etc.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - category_id
+      name: CategoryAttributeList
+      resource: CategoryAttribute
+    - direction: tomany
+      fks:
+      - category_id
+      name: ProductList
+      resource: Product
+    type: DeviceCategory
+  Inventory:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: location
+      required: true
+      template: text
+      type: VARCHAR
+    - name: quantity_on_hand
+      required: true
+      template: integer
+      type: INTEGER
+    description: Represents inventory details for each product.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents inventory details for each product.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Inventory
+  Order:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: order_date
+      template: date
+      type: DATETIME
+    description: Represents orders made by customers.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents orders made by customers.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - order_id
+      name: OrderItemList
+      resource: OrderItem
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    type: Order
+  OrderItem:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: order_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: unit_price
+      required: true
+      template: real
+      type: FLOAT
+    description: Represents individual items within an order.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents individual items within an order.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - order_id
+      name: order
+      resource: Order
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: OrderItem
+  Product:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: category_id
+      template: integer
+      type: INTEGER
+    - name: price
+      required: true
+      template: real
+      type: FLOAT
+    - name: stock_quantity
+      required: true
+      template: integer
+      type: INTEGER
+    - name: created_at
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents the different products available for sale.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents the different products available for sale.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - product_id
+      name: InventoryList
+      resource: Inventory
+    - direction: tomany
+      fks:
+      - product_id
+      name: OrderItemList
+      resource: OrderItem
+    - direction: tomany
+      fks:
+      - product_id
+      name: ReviewList
+      resource: Review
+    - direction: tomany
+      fks:
+      - product_id
+      name: SupplierProductList
+      resource: SupplierProduct
+    - direction: toone
+      fks:
+      - category_id
+      name: category
+      resource: DeviceCategory
+    type: Product
+  Promotion:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: description
+      template: text
+      type: TEXT
+    - name: start_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: end_date
+      required: true
+      template: date
+      type: DATETIME
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents promotions for products and accessories.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents promotions for products and accessories.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    type: Promotion
+  Review:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: customer_id
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: rating
+      template: integer
+      type: INTEGER
+    - name: comment
+      template: text
+      type: TEXT
+    - name: review_date
+      template: date
+      type: DATETIME
+    description: Represents customer reviews for products.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents customer reviews for products.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - customer_id
+      name: customer
+      resource: Customer
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    type: Review
+  Supplier:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: contact_info
+      template: text
+      type: TEXT
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Represents suppliers providing products and accessories.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    home_template: home_template.html
+    info_list: Represents suppliers providing products and accessories.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - supplier_id
+      name: SupplierProductList
+      resource: SupplierProduct
+    type: Supplier
+  SupplierProduct:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: product_id
+      template: integer
+      type: INTEGER
+    - name: supplier_id
+      template: integer
+      type: INTEGER
+    description: Represents the products provided by each supplier.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    home_template: home_template.html
+    info_list: Represents the products provided by each supplier.
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - product_id
+      name: product
+      resource: Product
+    - direction: toone
+      fks:
+      - supplier_id
+      name: supplier
+      resource: Supplier
+    type: SupplierProduct
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

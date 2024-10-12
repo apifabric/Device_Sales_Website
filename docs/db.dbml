@@ -1,0 +1,104 @@
+// Copy this text, paste to https://dbdiagram.io/d
+// Or, https://databasediagram.com/app
+
+Table Accessory {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    price FLOAT 
+    stock_quantity INTEGER 
+    }
+
+Table CategoryAttribute {
+    id INTEGER [primary key]
+    category_id INTEGER 
+    attribute_name VARCHAR 
+    value VARCHAR 
+    }
+
+Table DeviceCategory {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    }
+
+Table Customer {
+    id INTEGER [primary key]
+    first_name VARCHAR 
+    last_name VARCHAR 
+    email VARCHAR 
+    phone_number VARCHAR 
+    }
+
+Table Inventory {
+    id INTEGER [primary key]
+    product_id INTEGER 
+    location VARCHAR 
+    quantity_on_hand INTEGER 
+    }
+
+Table Product {
+    id INTEGER [primary key]
+    name VARCHAR 
+    category_id INTEGER 
+    price FLOAT 
+    stock_quantity INTEGER 
+    created_at DATETIME 
+    }
+
+Table Order {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    order_date DATETIME 
+    }
+
+Table OrderItem {
+    id INTEGER [primary key]
+    order_id INTEGER 
+    product_id INTEGER 
+    quantity INTEGER 
+    unit_price FLOAT 
+    }
+
+Table Promotion {
+    id INTEGER [primary key]
+    name VARCHAR 
+    description TEXT 
+    start_date DATETIME 
+    end_date DATETIME 
+    }
+
+Table Review {
+    id INTEGER [primary key]
+    customer_id INTEGER 
+    product_id INTEGER 
+    rating INTEGER 
+    comment TEXT 
+    review_date DATETIME 
+    }
+
+Table Supplier {
+    id INTEGER [primary key]
+    name VARCHAR 
+    contact_info TEXT 
+    }
+
+Table SupplierProduct {
+    id INTEGER [primary key]
+    supplier_id INTEGER 
+    product_id INTEGER 
+    }
+
+
+
+// Relationships
+    Ref: CategoryAttribute.(category_id) < DeviceCategory.(id)
+    Ref: Inventory.(product_id) < Product.(id)
+    Ref: Product.(category_id) < DeviceCategory.(id)
+    Ref: Order.(customer_id) < Customer.(id)
+    Ref: OrderItem.(order_id) < Order.(id)
+    Ref: OrderItem.(product_id) < Product.(id)
+    Ref: Review.(customer_id) < Customer.(id)
+    Ref: Review.(product_id) < Product.(id)
+    Ref: SupplierProduct.(product_id) < Product.(id)
+    Ref: SupplierProduct.(supplier_id) < Supplier.(id)

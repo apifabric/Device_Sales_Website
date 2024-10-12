@@ -1,0 +1,14 @@
+Use SQLAlchemy to create a sqlite database named system/genai/temp/model.sqlite  .
+
+The purpose of the database is: I recently started a new business focused on computer storage device sales.  I am selling devices such as Network Attached Storage (NAS) with Ethernet connectivity as well as Direct Attached Storage (DAS) providing USB 3.0 connectivity.  We will also sell internal and external accessories needed such as hard disk storage, eSATA devices like SSDs as well as M.2 PCIe & NVMe as well as USB-C and Cat-5 ethernet cables. Devices prociding 500GB storage all the way to devices providing 2 Terabytes of storage will be available.
+
+Create at least 12 tables.
+
+Hints: use autonum keys, allow nulls, foreign keys, no check constraints.
+If you choose to use a date, only use python datetime datatype.
+Remember that SQLite DateTime type only accepts Python datetime and date objects as input, this means you can not enter string attributes where a date or datetime object is expected.Provide a short description of each table. Include the description in each data model class docstring, prefixed with 'description: '. 
+Don't use python DECIMAL type.
+Don't install additional packages.
+Don't use the faker pip package.
+
+Create at least 48 rows of sample data. Add at least one row per table. Add some relationships and use foreign key columns instead of relationship names for the data inserts.
